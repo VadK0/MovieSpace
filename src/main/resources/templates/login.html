@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movies</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+</head>
+<body>
+	<div th:if="${param.error}">
+		Invalid user name and password.
+	</div>
+	<form th:action="@{/login}" method="post">
+		<div><label>User Name: <input type="text" name="username"/></label></div>
+		<div><label>Password: <input type="password" name="password"/></label></div>
+		<div><input type="submit" value="Sign In"/></div>
+		<input type="hidden" name="_csrf" value="d63f746f-c5f6-4cc6-99c0-9220ff784b23"/>
+	</form>  	
+</body>
+</html>
