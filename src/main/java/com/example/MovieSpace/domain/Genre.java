@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Entity
+/*@Entity
 public class Genre {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -59,4 +59,4 @@ public class Genre {
 	}
 	
 	
-}
+}*/

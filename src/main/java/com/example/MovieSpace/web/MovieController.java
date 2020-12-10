@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.MovieSpace.domain.GenreRepository;
+
 import com.example.MovieSpace.domain.Movie;
 import com.example.MovieSpace.domain.MovieRepository;
 
@@ -19,8 +19,7 @@ public class MovieController {
 	@Autowired
 	private MovieRepository movieRepository;
 	
-	@Autowired
-	private GenreRepository genreRepository;
+
 	
 	@RequestMapping(value="/login")
     public String login() {	

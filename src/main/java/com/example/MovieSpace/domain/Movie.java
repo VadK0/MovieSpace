@@ -1,4 +1,4 @@
-package com.example.MovieSpace.domain;
+ package com.example.MovieSpace.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,34 +8,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class Movie {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	private int dbID;
 	private String title;
-	private int year;
-	private int ageLimit;
+	private String year;
 	private double rating;
-	private String duration;
+	/*private String duration;
 	
 	@ManyToOne
     @JoinColumn(name = "genId")
 	@JsonBackReference
 	private Genre genre;
-
+	 */
 	public Movie() {}
-
-	public Movie(String title, int year, int ageLimit, double rating, String duration, Genre genre) {
+	
+	public Movie(int dbID, String title, String year, double rating) {
 		super();
+		this.dbID = dbID;
 		this.title = title;
 		this.year = year;
-		this.ageLimit = ageLimit;
 		this.rating = rating;
-		this.duration = duration;
-		this.genre = genre;
 	}
 
 	public Long getId() {
@@ -46,6 +46,14 @@ public class Movie {
 		this.id = id;
 	}
 
+	public int getDbID() {
+		return dbID;
+	}
+
+	public void setDbID(int dbID) {
+		this.dbID = dbID;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -54,51 +62,23 @@ public class Movie {
 		this.title = title;
 	}
 
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
-	}
-
-	public int getAgeLimit() {
-		return ageLimit;
-	}
-
-	public void setAgeLimit(int ageLimit) {
-		this.ageLimit = ageLimit;
 	}
 
 	public double getRating() {
 		return rating;
 	}
 
-	public void setRating(float rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
-	public String getDuration() {
-		return duration;
-	}
-
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
-
-	public Genre getGenre() {
-		return genre;
-	}
-
-	public void setGenre(Genre genre) {
-		this.genre = genre;
-	}
-
-	@Override
-	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", year=" + year + ", ageLimit=" + ageLimit + ", rating="
-				+ rating + ", duration=" + duration + "]";
-	}
+	
 	
 	
 }

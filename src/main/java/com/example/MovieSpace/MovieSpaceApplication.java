@@ -1,18 +1,25 @@
 package com.example.MovieSpace;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
-import com.example.MovieSpace.domain.Genre;
-import com.example.MovieSpace.domain.GenreRepository;
+
+
 import com.example.MovieSpace.domain.Movie;
 import com.example.MovieSpace.domain.MovieRepository;
+
 import com.example.MovieSpace.domain.User;
 import com.example.MovieSpace.domain.UserRepository;
+
+
 
 
 
@@ -26,30 +33,46 @@ public class MovieSpaceApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner movieDemo(MovieRepository movieRepository, GenreRepository genreRepository, UserRepository userRepository) {
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
+	
+	@Bean
+	public CommandLineRunner movieDemo(RestTemplate restTemplate, MovieRepository movieRepository, UserRepository userRepository) {
 		return (args) -> {
-			//add genres
-			genreRepository.save(new Genre("Drama"));
-			genreRepository.save(new Genre("Comedy"));
-			genreRepository.save(new Genre("Action"));
-			genreRepository.save(new Genre("Crime"));
 			
-			//add movies
-			movieRepository.save(new Movie("The Shawshank Redemption", 1994, 16, 9.3, "2h 22min", genreRepository.findByName("Drama").get(0)));
-			movieRepository.save(new Movie("The Godfather", 1972, 16, 9.2, "2h 55min", genreRepository.findByName("Crime").get(0)));
-			movieRepository.save(new Movie("The Dark Knight", 2008, 14, 9.0, "2h 32min", genreRepository.findByName("Action").get(0)));
-			movieRepository.save(new Movie("Pulp Fiction", 1994, 18, 8.9, "2h 34min", genreRepository.findByName("Crime").get(0)));
-		
+			
+			//get top rated movies from API and save it to String variable
+			String result = restTemplate.getForObject("https://api.themoviedb.org/3/movie/top_rated?api_key=2c006bb2980db62983eba1d45daf8fb1", String.class);
+			//log.info(quote.toString());
+			
+			JSONObject jsonResult1 = new JSONObject(result);
+			
+			JSONArray jsonResult2 = jsonResult1.getJSONArray("results");
+			
+			//getting results of object within an array from API
+			for(int i=0; i < jsonResult2.length(); i++ ) {
+				JSONObject jsonMovie = jsonResult2.getJSONObject(i);
+				
+				int dbID = jsonMovie.getInt("id");
+				String title= jsonMovie.getString("title");
+				String year= jsonMovie.getString("release_date");
+				double rating = jsonMovie.getDouble("vote_average");
+				movieRepository.save(new Movie(dbID, title, year, rating));
+				
+								
+			}
+			
 			// Create users: admin/admin user/user
 			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
 			User user2 = new User("admin", "$2a$10$0MMwY.IQqpsVc1jC8u7IJ.2rT8b0Cd3b3sfIBGV2zfgnPGtT4r0.C", "ADMIN");
 			userRepository.save(user1);
 			userRepository.save(user2);
-						
-			log.info("fetch all books");
+			/*			
+			log.info("fetch all movies");
 			for (Movie movie : movieRepository.findAll() ) {
 				log.info(movie.toString());
-			}
+			}*/
 		};
 		
 	}	
