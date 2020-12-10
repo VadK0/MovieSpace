@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <title>Movies</title>
+    <title>Hall of Fame</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Movies</h1>
+	<h1>Hall of Fame</h1>
 	<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
-	<a class="nav-link" href="/halloffame"><button class="btn btn-large btn-success">Hall of fame</button></a>
+	<a class="nav-link" href="/movielist"><button class="btn btn-large btn-success">Main page</button></a>
 	<form th:action="@{/logout}" method="post">
 		<input type="submit" value="Sign Out" class="btn btn-large btn-danger"/>
 	</form>
@@ -20,12 +20,12 @@
 			<th>Rating</th>
 			<th></th>
 		</tr>  
-    	<tr th:each = "movie : ${movies}">
+    	<tr th:each = "movie : ${likedmovies}">
     		<td><img th:src="${movie.poster}"/></td>
     		<td th:text="${movie.title}"></td>
  			<td th:text="${movie.year}"></td>  
  			<td th:text="${movie.rating}"></td> 
- 			<td><a th:href="@{/add/{id}(id=${movie.id})}" class="btn btn-large btn btn-primary">I like it</a></td>
+ 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${movie.id})}" class="btn btn-large btn-danger">Delete</a></td>
     	</tr>
      </table>  	
 </body>

@@ -58,7 +58,8 @@ public class MovieSpaceApplication {
 				String title= jsonMovie.getString("title");
 				String year= jsonMovie.getString("release_date");
 				double rating = jsonMovie.getDouble("vote_average");
-				movieRepository.save(new Movie(dbID, title, year, rating));
+				String poster = "https://image.tmdb.org/t/p/w200" + jsonMovie.getString("poster_path");
+				movieRepository.save(new Movie(dbID, title, year, rating, poster));
 				
 								
 			}

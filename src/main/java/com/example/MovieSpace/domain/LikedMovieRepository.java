@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-/*public interface GenreRepository extends CrudRepository<Genre, Long>{
+public interface LikedMovieRepository extends CrudRepository<LikedMovie, Long>{
 
-	List<Genre> findByName(String name);
+	List<LikedMovie> findByTitle(String title);
 	
-}*/
+}

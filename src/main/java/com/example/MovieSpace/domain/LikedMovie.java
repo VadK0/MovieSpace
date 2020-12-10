@@ -1,33 +1,29 @@
- package com.example.MovieSpace.domain;
+package com.example.MovieSpace.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-public class Movie {
+public class LikedMovie {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	private int dbID;
 	private String title;
 	private String year;
 	private double rating;
 	private String poster;
 	
-	public Movie() {}
+	public LikedMovie() {}
 	
-	public Movie(int dbID, String title, String year, double rating, String poster) {
+	public LikedMovie( String title, String year, double rating, String poster) {
 		super();
-		this.dbID = dbID;
+
 		this.title = title;
 		this.year = year;
 		this.rating = rating;
@@ -40,14 +36,6 @@ public class Movie {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public int getDbID() {
-		return dbID;
-	}
-
-	public void setDbID(int dbID) {
-		this.dbID = dbID;
 	}
 
 	public String getTitle() {
