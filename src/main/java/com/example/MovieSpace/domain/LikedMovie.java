@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-public class LikedMovie {
+public class LikedMovie { //Class for hall of fame
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;

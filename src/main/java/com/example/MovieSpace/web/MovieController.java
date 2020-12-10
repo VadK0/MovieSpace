@@ -32,18 +32,18 @@ public class MovieController {
     }
 	
 	@RequestMapping(value= {"/", "/movielist"})
-	public String movieList(Model model) {
+	public String movieList(Model model) { //list all movies
 		model.addAttribute("movies", movieRepository.findAll());
 		return "movielist";
 	}
 	
 	@RequestMapping(value="/movies", method = RequestMethod.GET)
-	 public @ResponseBody List<Movie> bookListRest() {	
+	 public @ResponseBody List<Movie> bookListRest() { //listing with REST
 		 return (List<Movie>) movieRepository.findAll();
 	 }
 	
 	@RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
-    public String addMovie(@PathVariable("id") Long movieId, Model model) {
+    public String addMovie(@PathVariable("id") Long movieId, Model model) { //add movies from main list to hall of fame
 		Optional<Movie> likedMovieResult = movieRepository.findById(movieId);
 		Movie likedMovie = likedMovieResult.get();
 		likedMovieRepository.save(new LikedMovie(likedMovie.getTitle(), likedMovie.getYear(), likedMovie.getRating(), likedMovie.getPoster()));
@@ -58,7 +58,7 @@ public class MovieController {
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
-	public String deleteLikedMovie(@PathVariable("id") Long movieId, Model model) {
+	public String deleteLikedMovie(@PathVariable("id") Long movieId, Model model) { //deleting movies from hall of fame for admin only
 		likedMovieRepository.deleteById(movieId);
         return "redirect:../halloffame";
     }

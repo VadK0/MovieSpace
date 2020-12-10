@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-public class Movie {
+public class Movie { //maid class with movies
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
